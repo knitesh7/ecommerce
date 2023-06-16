@@ -12,8 +12,9 @@ const path = require('path')
 dotenv.config()
 
 const PORT = process.env.PORT
+const Mongo_URL = process.env.Mongo_URL
 
-mongodbConnector('mongodb://127.0.0.1:27017/e-commerce-DB')
+mongodbConnector(Mongo_URL)
 
 const app = express()
 basicMiddlewares(app)
