@@ -19,7 +19,7 @@ mongodbConnector(Mongo_URL)
 const app = express()
 basicMiddlewares(app)
 
-app.use(express.static(path.join(__dirname,'./frontend/build')))
+app.use(express.static(path.join(__dirname,'./frontend/build/')))
 
 //to fetch uploaded images back
 app.use('/getimage', express.static('./uploads'))
