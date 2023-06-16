@@ -30,7 +30,7 @@ app.use('/products', productRouter)
 app.use('/carts', cartsRouter)
 app.use('/paymentgateway', paymentRouter)
 app.use('/orders',orderRouter)
-app.get('*',(req,res)=>res.render("index.html"))
+app.get('*',(req,res)=>res.sendFile(path.join(__dirname, './frontend/build/index.html')))
 app.use((req, res) => res.send('Page not found'))
 
 //..............................
