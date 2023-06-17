@@ -36,11 +36,11 @@ const loginController = async (req, res) => {
     }
     try {
         const user = await userHandler.findOne({ email: email })
-        const { _id, username, createdAt, address, mobile, userType } = user
-        const userObj = { _id, username, email, address, mobile, userType, createdAt: dateFormatter(createdAt) }
         if (user === null) {
             return res.status(400).json({ message: `Email is not registered.` })
         }
+        const { _id, username, createdAt, address, mobile, userType } = user
+        const userObj = { _id, username, email, address, mobile, userType, createdAt: dateFormatter(createdAt) }
         try {
             const passMatchedStatus = await comparePass(password, user.password)
             const token = user.generateToken()
@@ -89,7 +89,7 @@ const userDetailFetcher = async (req, res) => {
             const user = await userHandler.findOne({ _id: payloadObject._id })
             const { _id,username, email, createdAt, address, mobile, userType } = user
             const userObj = { _id,username, email, address, mobile, userType, createdAt: dateFormatter(createdAt) }
-            // console.log('sending : ',userObj)
+         
             return res.status(200).json({ userObj })
         } else {
             return res.status(400).json({ message: 'User is not signed in' })
