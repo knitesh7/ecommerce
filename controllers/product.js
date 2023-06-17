@@ -2,8 +2,8 @@ const fs = require('fs')
 const productHandler = require('../models/product')
 const productAdder = async (req, res) => {
     try {
-        const { name, price, quantity, description, category } = await req.body
-        const image = await req.file.filename
+        const { name, price, quantity, description, category } = req.body
+        const image = req.file.filename
 
         if (!name || !price || !quantity || !description || !category || !image) {
             return res.status(400).json({ message: 'All fields are not added' })

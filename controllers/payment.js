@@ -32,9 +32,8 @@ const transactionHandler = async (req, res) => {
                 submitForSettlement: true
             }
         });
-        const order = await orderHandler.create({ buyer: owner, payment: result, purchasedItems: { products: cartItems, productsQuantity: quantityArr } })
-        console.log(quantityArr)
-        console.log(cartItems)
+        await orderHandler.create({ buyer: owner, payment: result, purchasedItems: { products: cartItems, productsQuantity: quantityArr } })
+    
         return res.sendStatus(200)
 
     } catch (error) {
