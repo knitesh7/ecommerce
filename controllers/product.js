@@ -38,9 +38,8 @@ const productRemover = async (req, res) => {
 
 const productUpdator = async (req, res) => {
     try {
-        const { name, price, quantity, description, category,image } = await req.body
-        const oldProduct = await productHandler.findById(req.params.id)
-        await productHandler.findByIdAndUpdate(req.params.id, { name, price, quantity, description, category, image })
+        
+        await productHandler.findByIdAndUpdate(req.params.id, { ...req.body })
         return res.status(200).json({ message: 'Product Updated Successfully!' })
     } catch (error) {
         return res.status(500).json({ message: error.message })
