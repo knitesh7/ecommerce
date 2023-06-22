@@ -27,8 +27,10 @@ app.use('/products', productRouter)
 app.use('/carts', cartsRouter)
 app.use('/paymentgateway', paymentRouter)
 app.use('/orders',orderRouter)
-app.use((req, res) => res.send('Page not found'))
-//..............................
 
+//..............................
+app.use(express.static(path.join(__dirname, './frontend/build/')))
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, './frontend/build/index.html')))
+app.use((req, res) => res.send('Page not found'))
 app.listen(PORT, () => console.log('Server started..'))
 
