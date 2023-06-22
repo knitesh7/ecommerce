@@ -1,7 +1,7 @@
 const braintree = require("braintree");
-const dotenv = require('dotenv')
+// const dotenv = require('dotenv')
 const orderHandler = require('../models/order')
-dotenv.config()
+// dotenv.config()
 
 const gateway = new braintree.BraintreeGateway({
     environment: braintree.Environment.Sandbox,
@@ -32,8 +32,9 @@ const transactionHandler = async (req, res) => {
                 submitForSettlement: true
             }
         });
-        await orderHandler.create({ buyer: owner, payment: result, purchasedItems: { products: cartItems, productsQuantity: quantityArr } })
-    
+        const order = await orderHandler.create({ buyer: owner, payment: result, purchasedItems: { products: cartItems, productsQuantity: quantityArr } })
+        console.log(quantityArr)
+        console.log(cartItems)
         return res.sendStatus(200)
 
     } catch (error) {

@@ -7,22 +7,19 @@ const paymentRouter = require('./routes/paymentroutes')
 const orderRouter = require('./routes/orderroutes')
 const basicMiddlewares = require('./middlewares/basic')
 const mongodbConnector = require('./connection/dbconnection')
-const path = require('path')
 
 dotenv.config()
 
 const PORT = process.env.PORT
-const Mongo_URL = process.env.Mongo_URL
+const MONGO_URI = process.env.MONGO_URI 
 
-mongodbConnector(Mongo_URL)
+mongodbConnector(MONGO_URI)
 
 const app = express()
 basicMiddlewares(app)
 
-app.use(express.static(path.join(__dirname,'./frontend/build/')))
-
 //to fetch uploaded images back
-app.use('/getimage', express.static('./uploads'))
+// app.use('/getimage', express.static('./uploads'))
 
 //main routes
 app.use(router)
@@ -30,9 +27,7 @@ app.use('/products', productRouter)
 app.use('/carts', cartsRouter)
 app.use('/paymentgateway', paymentRouter)
 app.use('/orders',orderRouter)
-app.get('*',(req,res)=>res.sendFile(path.join(__dirname, './frontend/build/index.html')))
 app.use((req, res) => res.send('Page not found'))
-
 //..............................
 
 app.listen(PORT, () => console.log('Server started..'))

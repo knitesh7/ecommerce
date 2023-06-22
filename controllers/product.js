@@ -2,9 +2,8 @@ const fs = require('fs')
 const productHandler = require('../models/product')
 const productAdder = async (req, res) => {
     try {
-        const { name, price, quantity, description, category } = req.body
-        const image = req.file.filename
-
+        const { name, price, quantity, description, category,image } = await req.body
+    
         if (!name || !price || !quantity || !description || !category || !image) {
             return res.status(400).json({ message: 'All fields are not added' })
         }
@@ -31,7 +30,6 @@ const productsFetcher = async (req, res) => {
 const productRemover = async (req, res) => {
     try {
         const deletedProduct = await productHandler.findByIdAndDelete(req.params.id)
-        fs.unlink(`./uploads/${deletedProduct.image}`, err => console.log(err))
         return res.status(200).json({ message: 'Product has been deleted succesfully' })
     } catch (error) {
         return res.status(500).json({ message: error.message })
@@ -40,11 +38,9 @@ const productRemover = async (req, res) => {
 
 const productUpdator = async (req, res) => {
     try {
-        const { name, price, quantity, description, category } = await req.body
-        const image = await req.file.filename
+        const { name, price, quantity, description, category,image } = await req.body
         const oldProduct = await productHandler.findById(req.params.id)
         await productHandler.findByIdAndUpdate(req.params.id, { name, price, quantity, description, category, image })
-        fs.unlink(`./uploads/${oldProduct.image}`, err => console.log(err))
         return res.status(200).json({ message: 'Product Updated Successfully!' })
     } catch (error) {
         return res.status(500).json({ message: error.message })
