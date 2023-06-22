@@ -41,8 +41,8 @@ const productUpdator = async (req, res) => {
     let updateData = { name, price, quantity, description, category }
     try {
         if(req.body.image){
-            if(image!==''){
-                updateData = {...updateData,image }
+            if(req.body.image!==''){
+                updateData = {...updateData,image:req.body.image }
             }
         }
         await productHandler.findByIdAndUpdate(req.params.id, updateData)
